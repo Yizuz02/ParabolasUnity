@@ -41,11 +41,18 @@ public class Projectile : MonoBehaviour
             _fallingTimer += Time.deltaTime;
             MoveCamera();
         }
+        if (_fallingTimer>=5f){
+            gameObject.tag = "Untagged";
+            _end = true;
+            _fallingTimer = 0;
+            Invoke("ReturnCamera",2f);
+        }
         if (_isGrounded==true && _fallingTimer>0 && _end==false){
             Debug.Log("Tiempo=" + _fallingTimer);
+            Debug.Log("Pos2: " + transform.position.x);
             _fallingTimer = 0;
             _end = true;
-            gameObject.tag = null;
+            gameObject.tag = "Untagged";
             Invoke("ReturnCamera",2f);
         }
     }
@@ -56,6 +63,7 @@ public class Projectile : MonoBehaviour
         angle = _cannon.GetComponent<ShootProjectile>().angle;
         Debug.Log("Velocidad Inicial: " + initialVelocity);
         Debug.Log("Angulo: " + angle);
+        Debug.Log("Pos1: " + transform.position.x);
         _angleRadians = angle * (Mathf.PI/180);
         _velocityX = Mathf.Cos(_angleRadians) * initialVelocity;
         _velocityY = Mathf.Sin(_angleRadians) * initialVelocity;

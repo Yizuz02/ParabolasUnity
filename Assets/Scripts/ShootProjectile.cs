@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Globalization;
 using UnityEngine.UI;
+using TMPro;
 
 public class ShootProjectile : MonoBehaviour
 {
+    public int numBullets = 3;
     public GameObject shooter;
     public GameObject bulletPrefab;
     public InputField stringInitialVelocity;
     public InputField stringAngle;
+    public TextMeshProUGUI numBulletsText;
 
     public float initialVelocity = 0f;
     public float angle = 0f; 
@@ -23,7 +26,7 @@ public class ShootProjectile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        numBulletsText.text = "X " + numBullets;
     }
 
     // Update is called once per frame
@@ -34,8 +37,10 @@ public class ShootProjectile : MonoBehaviour
 
     public void Shoot()
     {
-        if (bulletPrefab != null && _firePoint != null){
+        if (bulletPrefab != null && _firePoint != null && numBullets>0){
             GameObject myBullet = Instantiate(bulletPrefab, _firePoint.position, Quaternion.identity) as GameObject;
+            numBullets--;
+            numBulletsText.text = "X " + numBullets;
         }
         initialVelocity = float.Parse(stringInitialVelocity.text);
         angle = float.Parse(stringAngle.text);
