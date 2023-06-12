@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
- using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class NextLevel : MonoBehaviour
 {
+    public static int levelCounter = 1;
+    
     public string nextScene;
     public string actualScene;
     public GameObject nextLevelButton;
@@ -14,6 +16,7 @@ public class NextLevel : MonoBehaviour
     public TextMeshProUGUI numEnemiesText;
 
     private GameObject[] _enemies;
+    private bool _levelFinish=false;
 
     void Awake()
     {
@@ -24,29 +27,37 @@ public class NextLevel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+ 
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         _enemies = GameObject.FindGameObjectsWithTag("Enemy");
         numEnemiesText.text = "X " + _enemies.Length;
-        if (_enemies.Length==0){
+        if (_enemies.Length==0 && !_levelFinish){
+            _levelFinish=true;
             nextLevelButton.SetActive(true);
+            levelCounter++;
         }
         if (_enemies.Length>0 && cannon.GetComponent<ShootProjectile>().numBullets == 0){
             restartButton.SetActive(true);
         }
     }
 
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
+
     public void ChangeLevel()
     {
-        SceneManager.LoadScene(nextScene);
+        SceneManager.LoadScene("Level "+ levelCounter.ToString());
     }
 
     public void RestartLevel()
     {
-        SceneManager.LoadScene(actualScene);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
