@@ -37,11 +37,14 @@ public class ShootProjectile : MonoBehaviour
 
     public void Shoot()
     {
+        //Crea la bala adelante del cañon
         if (bulletPrefab != null && _firePoint != null && numBullets>0){
             GameObject myBullet = Instantiate(bulletPrefab, _firePoint.position, Quaternion.identity) as GameObject;
+            //Al crearse una nueva bala se resta el numero de balas del jugador y se actualiza el contador
             numBullets--;
             numBulletsText.text = "X " + numBullets;
         }
+        // Obtiene los valoes de velocidad inicial y angulo que se encuentren en las cajas de texto
         initialVelocity = float.Parse(stringInitialVelocity.text);
         angle = float.Parse(stringAngle.text);
     }

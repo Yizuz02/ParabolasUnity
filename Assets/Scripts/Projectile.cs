@@ -59,16 +59,23 @@ public class Projectile : MonoBehaviour
 
     public void Launch()
     {
+        //Se recuperan los valores de velocidad inicial y del angulo del otro script
         initialVelocity = _cannon.GetComponent<ShootProjectile>().initialVelocity;
         angle = _cannon.GetComponent<ShootProjectile>().angle;
+        //Se imprimen los valores de velocidad inicial, angulo y su posicion inicial
+        //en X, todo esto fue usado para pruebas y llevar control de estos valores
         Debug.Log("Velocidad Inicial: " + initialVelocity);
         Debug.Log("Angulo: " + angle);
         Debug.Log("Pos1: " + transform.position.x);
+        //Se convierte el valor del angulo a radianes
         _angleRadians = angle * (Mathf.PI/180);
+        //Se calcula la velocidad en X y en Y y se imprimen los valores en consola
+        //(esto para pruebas)
         _velocityX = Mathf.Cos(_angleRadians) * initialVelocity;
         _velocityY = Mathf.Sin(_angleRadians) * initialVelocity;
         Debug.Log("Velocidad en X:"+_velocityX);
         Debug.Log("Velocidad en Y:"+_velocityY);
+        //Se le suman estas velocidades a la bala
         _rigidBody.AddForce(Vector2.right * _velocityX, ForceMode2D.Impulse);
         _rigidBody.AddForce(Vector2.up * _velocityY, ForceMode2D.Impulse);
     }
